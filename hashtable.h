@@ -1,0 +1,6 @@
+#ifndef HASH_TABLE_LITE_HASHTABLE_H
+#define HASH_TABLE_LITE_HASHTABLE_H
+
+void hello(void);
+
+#endif //HASH_TABLE_LITE_HASHTABLE_H
