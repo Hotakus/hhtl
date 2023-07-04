@@ -8,6 +8,7 @@
  */
 
 #define DEBUG 0
+#define HHTL_TEST 1
 
 // chain
 #define USE_CHAIN_SEM 0

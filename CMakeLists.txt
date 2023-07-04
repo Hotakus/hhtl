@@ -19,7 +19,6 @@ add_subdirectory(./src)
 aux_source_directory(. SRC_ROOT)
 
 if (HHTL_TEST)
-    add_definitions(-DHHTL_TEST)
     add_executable(hhtl ${SRC_ROOT})
 else ()
     add_library(hhtl ${SRC_ROOT})
