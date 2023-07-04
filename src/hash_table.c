@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include "./include/hash_table.h"
 
-#if HASH_TEST == 1
+#if HHTL_TEST == 1
 #include <sys/time.h>
 #endif
 
@@ -274,7 +274,7 @@ void hash_table_rehash(hash_table_t *ht, size_t new_size) {
 
     // 再散列
     if (temp_entry->length == ht->cur_size) {
-#if HASH_TEST == 1
+#if DEBUG == 1
         printf("!!!Rehash!!! -- May be time-consuming...\n");
 #endif
         hash_table_clear(ht);
@@ -308,7 +308,7 @@ void hash_table_set_rehash_method(hash_table_t *ht, ht_rehash_method_t method) {
     ht->pri->rehash_method = method;
 }
 
-#ifdef HHTL_TEST
+#if HHTL_TEST == 1
 void hash_test(int tn) {
 
     int a = 996;
@@ -483,5 +483,20 @@ void hash_example() {
 #endif
 
 void hhtl_info_show() {
+    char *logo = "\n"
+                 "|  _    _  _    _  _______   _       _  _          |\n"
+                 "| | |  | || |  | ||__   __| | |     (_)| |         |\n"
+                 "| | |__| || |__| |   | |    | |      _ | |_  ___   |\n"
+                 "| |  __  ||  __  |   | |    | |     | || __|/ _ \\  |\n"
+                 "| | |  | || |  | |   | |    | |____ | || |_|  __/  |\n"
+                 "| |_|  |_||_|  |_|   |_|    |______||_| \\__|\\___|  |    \n"
+                 "|                                                  |";
 
+    printf("\n --------------------------------------------------");
+    printf("%s\n --------------------------------------------------\n", logo);
+
+    printf("| Description : %s \t   |\n", HHTL_DESC);
+    printf("| Version     : %s \t\t\t   |\n", HHTL_VER);
+    printf("| GitHub addr : %s    |\n", HHTL_HOMEPAGE_URL);
+    printf(" --------------------------------------------------\n");
 }
