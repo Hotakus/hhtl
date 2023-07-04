@@ -81,8 +81,21 @@ int main() {
 
 ---
 
-## Test
+## 测试
 
+对哈希表的性能进行测试。默认的测试数量是10000000。  
+* System: Windows 11 64bits
+* Memory: 16 GiB
+* CPU   : Intel I7-8700
+
+我们知道，哈希表中有负载因子，其计算公式为：  
+
+$\sqrt{3x-1}+(1+x)^2$
+
+
+```commandline
+
+```
 
 
 ---
