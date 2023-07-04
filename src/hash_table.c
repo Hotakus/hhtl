@@ -132,14 +132,14 @@ int hash_table_put(hash_table_t *ht, const char *key, void *value) {
                 // 若冲突总数值占有效空间数值的比例大于允许比例，则进行再散列
                 float ratio = (float)ht->collision_cnt / (float)ht->valid_size;
                 if (ratio > HASH_TABLE_COLLISION_MAX_RADIO)
-                    hash_table_rehash(ht, (int)((float)ht->valid_size * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+                    hash_table_rehash(ht, (int)((float)ht->cur_size * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
                 break;
             }
             case HASH_TABLE_REHASH_LOAD_FACTOR: {
                 // 若负载因子大于等于允许值，则进行再散列
                 float load_factor = ((float)ht->cur_size / (float)ht->valid_size);
                 if (load_factor >= HASH_TABLE_REHASH_FACTOR)
-                    hash_table_rehash(ht, (int)((float)ht->valid_size * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+                    hash_table_rehash(ht, (int)((float)ht->cur_size * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
                 break;
             }
             default:
