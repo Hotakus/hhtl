@@ -1,4 +1,6 @@
-# Hash table lite 
+# HHash table lite 
+
+<img align="center" src="HHash-Table-Lite.png">
 
 An implementation of hash table by C language, which lightweight, high-performance, and easy to use.
 
@@ -8,4 +10,10 @@ An implementation of hash table by C language, which lightweight, high-performan
 
 ## How to use
 
+---
 
+## Test
+
+
+
+---
