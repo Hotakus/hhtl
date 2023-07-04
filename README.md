@@ -88,9 +88,18 @@ int main() {
 * Memory: 16 GiB
 * CPU   : Intel I7-8700
 
+### 再散列
 我们知道，哈希表中有负载因子，其计算公式为：  
+$Load factor = Occupation / Capacity$  
+其中：`Load factor`即负载因子， Occupation 即哈希表实际数据量，
+Capacity 即哈希表所分配容量。  
+当负载因子为 1 时，代表哈希表被“存满了”（实际可能没有，因为存在哈希冲突），这个时候一般需要进行 rehash（再散列）。  
+再散列即对原哈希表进行备份、扩容、用哈希函数在新尺度下再哈希化。rehash可以将原本紧凑的数据分散开来，保证数据存取的效率。
 
-$\sqrt{3x-1}+(1+x)^2$
+### 冲突比
+冲突比即 `Collision / `
+
+测试将围绕 “负载因子” 与 “冲突比” 进行。
 
 
 ```commandline
