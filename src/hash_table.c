@@ -108,10 +108,8 @@ void hash_table_clear(hash_table_t *ht) {
  * @param ht 要销毁的哈希表
  */
 void hash_table_destroy(hash_table_t *ht) {
-    if (ht->pri) {
-        ht->pri->clear(ht);
-        free(ht->pri);
-    }
+    hash_table_clear(ht);
+    free(ht->pri);
     free(ht);
 }
 
@@ -274,7 +272,7 @@ void hash_table_rehash(hash_table_t *ht, size_t new_size) {
 
     // 再散列
     if (temp_entry->length == ht->cur_size) {
-#if DEBUG == 1
+#if HHTL_TEST == 1
         printf("!!!Rehash!!! -- May be time-consuming...\n");
 #endif
         hash_table_clear(ht);
@@ -286,7 +284,7 @@ void hash_table_rehash(hash_table_t *ht, size_t new_size) {
             probe = probe->next_node;
         }
     } else {
-#if HASH_TEST == 1
+#if HHTL_TEST == 1
         printf("%s verify error. (ht:%zu -- t:%zu)\n", __FUNCTION__, ht->cur_size, temp_entry->length);
 #endif
     }
@@ -310,7 +308,6 @@ void hash_table_set_rehash_method(hash_table_t *ht, ht_rehash_method_t method) {
 
 #if HHTL_TEST == 1
 void hash_test(int tn) {
-
     int a = 996;
     int b = 114514;
     struct timeval begin, end;
@@ -327,13 +324,13 @@ void hash_test(int tn) {
     // Malloc test
     char **keys = calloc(test_nums, sizeof(char *));
     for (int i = 0; i < test_nums; ++i) {
-        keys[i] = calloc(10, sizeof(char));
-        sprintf(keys[i], "%s", rand_string(10));
+        keys[i] = rand_string(10);
     }
 
     // create test
     gettimeofday(&begin, NULL);
-    hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+    //hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+    hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * 1));
     ht->set_auto_rehash(ht, true);
     gettimeofday(&end, NULL);
     dif_sec = end.tv_sec - begin.tv_sec;
@@ -445,6 +442,9 @@ void hash_test(int tn) {
 }
 
 void hash_example() {
+    // 显示库信息
+    hhtl_info_show();
+
     // 创建一个哈希表对象，对象名为“hash_table_01”，预分配size为1000。
     int ps = 1000;
     hash_table_t *ht = hash_table_create("hash_table_01", ps);
