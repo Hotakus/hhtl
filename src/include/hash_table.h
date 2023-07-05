@@ -89,7 +89,7 @@ typedef struct hash_table_t {
 hash_table_t *hash_table_create(char *desc, size_t pre_size);
 void hash_table_destroy(hash_table_t *ht);
 
-#ifdef HHTL_TEST
+#if HHTL_TEST == 1
 void hash_test (int tn, int times, bool use_highest_performance);
 void hash_example();
 #endif

@@ -63,10 +63,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin) # 可执行文件
 #add_subdirectory(./src)
 aux_source_directory(./src/ SRC_ROOT)
 
-#if (HHTL_EXEC)
-#    add_definitions(-DHHTL_EXEC)
+if (HHTL_EXEC)
+    add_definitions(-DHHTL_EXEC)
     add_executable(hhtl ${SRC_ROOT} hhtl.c)
-#else ()
-#    add_library(hhtl ${SRC_ROOT} hhtl.c)
-#endif ()
+else ()
+    add_library(hhtl ${SRC_ROOT} hhtl.c)
+endif ()
 

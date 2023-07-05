@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "hhtl.h"
 
-//#ifdef HHTL_EXEC
+#ifdef HHTL_EXEC
 int main(int argc, char *argv[])
 {
     hhtl_info_show();
@@ -10,4 +10,4 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-//#endif
+#endif
