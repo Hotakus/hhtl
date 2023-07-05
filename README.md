@@ -67,26 +67,30 @@ int main() {
     return 0;
 }
 ```
-当然，你可以在`config.h`文件中修改`HHTL_TEST`的值为 1，然后
-调用`hash_test()`函数进行Hash表系统的测试，这会比较耗内存:
-```c
-#include "./hhtl/hhtl.h"
-int main() {
-    hash_test();      // 哈希表系统测试
-    // hash_example;  // 哈希表简单测试
-    return 0;
-}
-```
-测试完后记得将`HHTL_TEST`的值修改为 0 关闭测试。
 
 ---
 
 ## 测试
 
-对哈希表的性能进行测试。默认的测试数量是10000000。  
+对哈希表的性能进行测试。默认的测试数量是10000000。
 * System: Windows 11 64bits
 * Memory: 16 GiB
 * CPU   : Intel I7-8700
+
+你可以在`config.h`文件中修改`HHTL_TEST`的值为 1，然后
+调用`hash_test()`函数进行Hash表系统的测试，这会比较耗内存:
+```c
+#include "./hhtl/hhtl.h"
+int main() {
+    // 库信息显示
+    hhtl_info_show();
+    // 哈希表简单测试
+    hash_example();
+    // 哈希表系统测试，10000000即测试数据量，5即测试轮数，true 表示使用最高性能倍数进行测试
+    hash_test(10000000, 5, true);      
+    return 0;
+}
+```
 
 ### 负载因子
 我们知道，哈希表中有负载因子，其计算公式为：Load factor = Occupation / Capacity  
@@ -170,6 +174,10 @@ Total     elapsed time: 7 secs, 7544 ms, 7544423 us
 
 当 `α == (1 / 哈希表最高性能倍数)` 时，拥有最高 Put 和 Get 性能，其中 Get 性能提升更明显、更稳定。  
 此外，若进一步增加 `哈希表最高性能倍数` 的数值，哈希表性能反而会呈下降趋势。
+
+<br>
+
+测试完后记得将`HHTL_TEST`的值修改为 0 关闭测试。
 
 ---
 
