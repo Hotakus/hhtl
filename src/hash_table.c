@@ -329,8 +329,8 @@ void hash_test(int tn) {
 
     // create test
     gettimeofday(&begin, NULL);
-    //hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
-    hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * 1));
+    hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+    //hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * 1));
     ht->set_auto_rehash(ht, true);
     gettimeofday(&end, NULL);
     dif_sec = end.tv_sec - begin.tv_sec;
@@ -442,9 +442,6 @@ void hash_test(int tn) {
 }
 
 void hash_example() {
-    // 显示库信息
-    hhtl_info_show();
-
     // 创建一个哈希表对象，对象名为“hash_table_01”，预分配size为1000。
     int ps = 1000;
     hash_table_t *ht = hash_table_create("hash_table_01", ps);

@@ -20,7 +20,7 @@ aux_source_directory(./src/ SRC_ROOT)
 
 if (HHTL_EXEC)
     add_definitions(-DHHTL_EXEC)
-    add_executable(hhtl ${SRC_ROOT})
+    add_executable(hhtl ${SRC_ROOT} hhtl.c)
 else ()
     add_library(hhtl ${SRC_ROOT} hhtl.c)
 endif ()
