@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 project(hhtl
         LANGUAGES C
-        VERSION 1.0.1.0
+        VERSION 1.0.2.0
         DESCRIPTION "Hotakus' Hash Table Lite"
         HOMEPAGE_URL https://github.com/Hotakus/hhtl
         )
@@ -23,3 +23,4 @@ if (HHTL_TEST)
 else ()
     add_library(hhtl ${SRC_ROOT})
 endif ()
+
