@@ -307,7 +307,13 @@ void hash_table_set_rehash_method(hash_table_t *ht, ht_rehash_method_t method) {
 }
 
 #if HHTL_TEST == 1
-void hash_test(int tn) {
+size_t put_times = 0;
+size_t put_times_tmp = 0;
+size_t get_times = 0;
+size_t get_times_tmp = 0;
+
+void _hash_test(int tn, bool use_highest_performance) {
+
     int a = 996;
     int b = 114514;
     struct timeval begin, end;
@@ -329,7 +335,9 @@ void hash_test(int tn) {
 
     // create test
     gettimeofday(&begin, NULL);
-    hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+    hash_table_t *ht = hash_table_create("hash_table1",
+                                         (int)((float)test_nums *
+                                         (use_highest_performance ? HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE : 1)));
     //hash_table_t *ht = hash_table_create("hash_table1", (int)((float)test_nums * 1));
     ht->set_auto_rehash(ht, true);
     gettimeofday(&end, NULL);
@@ -349,6 +357,8 @@ void hash_test(int tn) {
     dif_usec = end.tv_usec - begin.tv_usec;
     res = dif_sec * 1000000 + dif_usec;
     total += res;
+    put_times += (res / 1000);
+    put_times_tmp = (res / 1000);
     printf("Put       elapsed time: %lld secs, %lld ms, %lld us\n", (res / 1000000), (res / 1000), res);
 
     // collision chain max length
@@ -394,6 +404,8 @@ void hash_test(int tn) {
     dif_usec = end.tv_usec - begin.tv_usec;
     res = dif_sec * 1000000 + dif_usec;
     total += res;
+    get_times += (res / 1000);
+    get_times_tmp = (res / 1000);
     printf("Get       elapsed time: %lld secs, %lld ms, %lld us\n", (res / 1000000), (res / 1000), res);
 
     printf("Collision count: %zd, valid size: %zd (space utilization: %.2f%%)\n",
@@ -440,6 +452,35 @@ void hash_test(int tn) {
 
     printf("Total     elapsed time: %lld secs, %lld ms, %lld us\n", (total / 1000000), (total / 1000), total);
 }
+
+
+void hash_test(int tn, int times, bool use_highest_performance) {
+    int _times = times;
+    size_t *tp = calloc(_times, sizeof(size_t));
+    size_t *tg = calloc(_times, sizeof(size_t));
+
+    for (int i = 0; i < _times; ++i) {
+        _hash_test(tn, use_highest_performance);
+        tp[i] = put_times_tmp;
+        tg[i] = get_times_tmp;
+    }
+
+
+    for (int i = 0; i < _times; ++i) {
+        printf("%zd + ", tp[i]);
+    }
+    printf(" = %zd\n", put_times / _times);
+
+    for (int i = 0; i < _times; ++i) {
+        printf("%zd + ", tg[i]);
+    }
+    printf(" = %zd\n", get_times / _times);
+
+
+    free(tp);
+    free(tg);
+}
+
 
 void hash_example() {
     // 创建一个哈希表对象，对象名为“hash_table_01”，预分配size为1000。
