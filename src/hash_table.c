@@ -472,8 +472,8 @@ void hash_example() {
     ht->remove(ht, key);
     printf("Remove -- key: %s\n", key);
 
-    // 主动再散列，再散列数值为原size的最佳性能倍数
-    ht->rehash(ht, (int)((float)ps * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
+    // 主动再散列，再散列数值为数据真实size的最佳性能倍数，此时的性能达到最高
+    ht->rehash(ht, (int)((float)ht->cur_size * HASH_TABLE_HIGHEST_PERFORMANCE_MULTIPLE));
     printf("Rehash\n");
 
     // 销毁哈希表
