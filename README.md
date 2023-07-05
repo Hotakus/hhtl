@@ -126,22 +126,22 @@ int main() {
 ```commandline
 Number of tests: 10000000
 Initializing...
-Create    elapsed time: 0 secs, 0 ms, 12 us
-Put       elapsed time: 3 secs, 3965 ms, 3965912 us
-Max       collision chain length: 8 
-SingleGet elapsed time: 0 secs, 0 ms, 0 us (biqvpxcxct : 114514 - true)
-Get       elapsed time: 3 secs, 3077 ms, 3077344 us
-Collision count: 3678676, valid size: 10000000 (space utilization: 63.21%)
-Destro    elapsed time: 1 secs, 1872 ms, 1872798 us
-Free      elapsed time: 0 secs, 438 ms, 438566 us
-Total     elapsed time: 9 secs, 9417 ms, 9417415 us
+Create    elapsed time: 0 secs, 0 ms, 13 us
+Put       elapsed time: 3 secs, 3009 ms, 3009876 us
+Max       collision chain length: 9 
+SingleGet elapsed time: 0 secs, 0 ms, 0 us (wbdfqakdvh : 114514 - true)
+Get       elapsed time: 2 secs, 2252 ms, 2252731 us
+Collision count: 3677695, valid size: 10000000 (space utilization: 63.22%)
+Destro    elapsed time: 1 secs, 1887 ms, 1887925 us
+Free      elapsed time: 0 secs, 333 ms, 333679 us
+Total     elapsed time: 7 secs, 7544 ms, 7544423 us
 ```
 其中：
 * `Create` 代表创建哈希表耗时，一般较为稳定。
-* `Put` 代表哈希表进行 `tc` 次 Put 操作，耗时为 3965 ms。
+* `Put` 代表哈希表进行 `tc` 次 Put 操作，耗时为 3009 ms。
 * `Max collision chain length` 代表负载因子为1，数据量为`tc`时的最长冲突链表长度
 * `Single Get` 代表单次 Get 耗时
-* `Get` 代表哈希表进行 `tc` 次 `Get` 操作，耗时 3077 ms。
+* `Get` 代表哈希表进行 `tc` 次 `Get` 操作，耗时 2252 ms。
 * `Collision count` 代表负载因子为 1，数据量为 `tc` 时的冲突数据量，括号内为空间利用率
 * `Destro` 代表销毁哈希表耗时。
 * `Free` 代表 `tc` 个 Keys 释放耗时。
@@ -150,24 +150,25 @@ Total     elapsed time: 9 secs, 9417 ms, 9417415 us
 <br>
 
 对此，在单次运行时，进行数据量为 `tc` ，连续 5 次的测试取平均值：  
-`Put: (3993 + 3938 + 4035 + 4024 + 4118) / 5 = 4021 ms`，标准差：65.73  
-`Get: (3010 + 3054 + 3028 + 2963 + 3015) / 5 = 3014 ms`，标准差：33.22  
+`Put: (3009 + 3015 + 3203 + 3395 + 3155) / 5 = 3155 ms`，标准差：158.76    
+`Get: (2252 + 2237 + 2313 + 2429 + 2538) / 5 = 2353 ms`，标准差：127.73   
 平均空间利用率（未冲突数据量 / 数据总量）：63.20%
 
 
 同样的，当负载因子为 `1 / 哈希表最高性能倍数` 时并在单次运行时，进行数据量为 `tc` ，连续 5 次的测试取平均值：  
-`Put: (3199 + 3132 + 3145 + 3144 + 3133) / 5 = 3150 ms`，标准差：27.72  
-`Get: (2324 + 2385 + 2338 + 2326 + 2353) / 5 = 2345 ms`，标准差：25.07  
+`Put: (2580 + 2388 + 2429 + 2440 + 2419) / 5 = 2451 ms`，标准差：74.56   
+`Get: (1723 + 1755 + 1740 + 1742 + 1760) / 5 = 1744 ms`，标准差：14.47   
 平均空间利用率（未冲突数据量 / 数据总量）：87.78%
 
 ### 结果
 可以看到，当负载因子（α）为 1 时 与 负载因子 为 `1 / 哈希表最高性能倍数` 时
 的测试数据有明显差异。  
 当 `α == 1` 时，Put 的平均耗时比 `α == (1 / 哈希表最高性能倍数)` 时
-要多 871 ms，Get 的平均耗时要多 669 ms，平均空间利用率相差 24.58%
+要多 704 ms，Get 的平均耗时要多 609 ms，平均空间利用率低 24.58%
 
-从标准差看，当 `α == 1` 时，Put 和 Get 更不稳定，空间利用率更低。
+从标准差看，当 `α == 1` 时，Put 和 Get 更不稳定，空间利用率更低。  
 
+当 `α == (1 / 哈希表最高性能倍数)` 时，拥有最高 Put 和 Get 性能，其中 Get 性能提升更明显、更稳定。  
 此外，若进一步增加 `哈希表最高性能倍数` 的数值，哈希表性能反而会呈下降趋势。
 
 ---
