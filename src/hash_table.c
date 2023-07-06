@@ -27,7 +27,7 @@ static void hash_table_set_rehash_method(hash_table_t *ht, ht_rehash_method_t me
 
 // 私有变量结构体
 struct private {
-    hash_table_entry_t *map;    // 当前哈希表映射
+    hash_table_map_elem_t *map;    // 当前哈希表映射
     bool auto_rehash;           // 是否自动再散列，默认为 false
     ht_rehash_method_t rehash_method; // 哈希表重新散列触发方法
 
@@ -58,7 +58,7 @@ hash_table_t *hash_table_create(char *desc, size_t pre_size) {
 
     ht->valid_size = pre_size;
     ht->pri = calloc(1, sizeof(private));
-    ht->pri->map = (hash_table_entry_t *) calloc(ht->valid_size, sizeof(hash_table_entry_t));
+    ht->pri->map = (hash_table_map_elem_t *) calloc(ht->valid_size, sizeof(hash_table_map_elem_t));
     ht->pri->auto_rehash = false;
     ht->pri->rehash_method = HASH_TABLE_REHASH_COLLISION;
 
@@ -277,7 +277,7 @@ void hash_table_rehash(hash_table_t *ht, size_t new_size) {
 #endif
         hash_table_clear(ht);
         ht->valid_size = new_size;
-        ht->pri->map = (hash_table_entry_t *) calloc(ht->valid_size, sizeof(hash_table_entry_t));
+        ht->pri->map = (hash_table_map_elem_t *) calloc(ht->valid_size, sizeof(hash_table_map_elem_t));
         ht_key_value_t *probe = temp_entry->head->next_node;
         while (probe != temp_entry->tail) {
             ht->put(ht, probe->name, probe->data);

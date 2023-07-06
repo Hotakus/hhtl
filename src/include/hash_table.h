@@ -31,7 +31,7 @@ typedef chain_node_t ht_key_value_t;
 
 /* Methods typedef -- Begin */
 typedef struct hash_table_t hash_table_t;
-typedef struct hash_table_entry_t hash_table_entry_t;
+typedef struct hash_table_map_elem_t hash_table_map_elem_t;
 typedef enum ht_rehash_method_t ht_rehash_method_t;
 
 typedef void (hash_table_limit_t)(hash_table_t *ht, size_t limit_size);
@@ -53,10 +53,10 @@ typedef enum ht_rehash_method_t {
     HASH_TABLE_REHASH_LOAD_FACTOR,
 } ht_rehash_method_t;
 
-typedef struct hash_table_entry_t {
+typedef struct hash_table_map_elem_t {
     ht_key_value_t pair;                    // 键值对
     hash_table_collision_entry_t *entry;    // 冲突链表入口
-} hash_table_entry_t;
+} hash_table_map_elem_t;
 
 typedef struct hash_table_t {
     /* 公共变量 */
