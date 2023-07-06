@@ -40,6 +40,7 @@ typedef ht_key_value_t *(hash_table_get_t)(hash_table_t *ht, char *key);
 typedef void (hash_table_remove_t)(hash_table_t *ht, char *key);
 typedef void (hash_table_rehash_t)(hash_table_t *ht, size_t new_size);
 typedef void (hash_table_clear_t)(hash_table_t *ht);
+typedef void (hash_table_poll_t)(hash_table_t *ht);
 /* Set and Get -- Begin */
 typedef void (hash_table_set_ar_t)(hash_table_t *ht, bool ar);
 typedef bool (hash_table_get_ar_t)(hash_table_t *ht);
@@ -71,6 +72,7 @@ typedef struct hash_table_t {
         hash_table_get_t *get;
         hash_table_remove_t *remove;
         hash_table_rehash_t *rehash;
+        hash_table_poll_t *poll;
 
         /* Set method */
         hash_table_set_ar_t *set_auto_rehash;    // set auto rehash

@@ -19,6 +19,7 @@ static ht_key_value_t *hash_table_get(hash_table_t *ht, char *key);
 static void hash_table_remove(hash_table_t *ht, char *key);
 static void hash_table_rehash(hash_table_t *ht, size_t new_size);
 static void hash_table_clear(hash_table_t *ht);
+static void ht_poll(hash_table_t *ht);
 
 static void hash_table_set_ar(hash_table_t *ht, bool ar);
 static bool hash_table_get_ar(hash_table_t *ht);
@@ -68,6 +69,7 @@ hash_table_t *hash_table_create(char *desc, size_t pre_size) {
     ht->remove = hash_table_remove;
     ht->rehash = hash_table_rehash;
     ht->pri->clear = hash_table_clear;
+    ht->poll = ht_poll;
 
     ht->set_auto_rehash = hash_table_set_ar;
     ht->get_auto_rehash = hash_table_get_ar;
@@ -537,4 +539,28 @@ void hhtl_info_show() {
     printf("| Version     : %s \t\t\t   |\n", HHTL_VER);
     printf("| GitHub addr : %s    |\n", HHTL_HOMEPAGE_URL);
     printf(" --------------------------------------------------\n");
+}
+
+void ht_poll(hash_table_t *ht) {
+    int cnt = 0;
+    for (int i = 0; i < ht->valid_size; ++i) {
+        hash_table_map_elem_t *map_elem = &ht->pri->map[i];
+        if (map_elem && map_elem->pair.name) {
+            printf("[%02d] (%s) ", i, map_elem->pair.name);
+            cnt += 1;
+            if (cnt == 20) break;
+        } else {
+            continue;
+        }
+
+        if (map_elem->entry) {
+            chain_node_t *probe = map_elem->entry->head->next_node;
+            while (probe != map_elem->entry->tail) {
+                printf("-> (%s) ", probe->name);
+                probe = probe->next_node;
+            }
+        }
+        printf("\n");
+
+    }
 }
