@@ -183,5 +183,6 @@ Total     elapsed time: 7 secs, 7544 ms, 7544423 us
 
 ## TODO
 - [ ] 设计增量再散列（Incremental Rehashing）提高再散列效率。
+- [ ] 动态分配
 
 ---
