@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.18)
 project(hhtl
         LANGUAGES C
         VERSION 1.0.3.0
@@ -65,6 +65,7 @@ aux_source_directory(./src/ SRC_ROOT)
 
 if (HHTL_EXEC)
     add_definitions(-DHHTL_EXEC)
+    add_definitions(-DHHTL_TEST)
     add_executable(hhtl ${SRC_ROOT} hhtl.c)
 else ()
     add_library(hhtl ${SRC_ROOT} hhtl.c)

@@ -308,7 +308,7 @@ void hash_table_set_rehash_method(hash_table_t *ht, ht_rehash_method_t method) {
     ht->pri->rehash_method = method;
 }
 
-#if HHTL_TEST == 1
+#ifdef HHTL_TEST
 size_t put_times = 0;
 size_t put_times_tmp = 0;
 size_t get_times = 0;
