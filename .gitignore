@@ -2,6 +2,8 @@
 # Prerequisites
 *.d
 
+*build*/
+
 bin/
 lib/
 
